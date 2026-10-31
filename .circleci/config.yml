@@ -6,16 +6,6 @@ jobs:
       - image: cimg/node:20.11.0 # Node.js ve npm'in yüklü olduğu resmi imaj
     steps:
       - checkout
-    # 1. Node ve npm versiyonunu doğrulayın (Sorun giderme için faydalıdır)
-      - run:
-          name: Check Node version
-          command: node -v && npm -v
-
-      # 2. Bağımlılıkları yükleyin
-      - run:
-          name: Install Dependencies
-          command: npm install
-
       - run:
           name: Statik Site Kontrolü
           command: |
