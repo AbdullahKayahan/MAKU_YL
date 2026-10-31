@@ -1,36 +1,21 @@
 version: 2.1
 
 jobs:
- build-and-deploy:
+  build-and-deploy:
     docker:
-      - image: cimg/node:22.0.0 # Node.js ve npm'in yüklü olduğu resmi imaj
+      - image: cimg/node:20.11.0
     steps:
       - checkout
-      - run:
-          name: Statik Site Kontrolü
-          command: |
-            echo "Statik HTML sitesi başarıyla kontrol edildi."
-            if [ -f "index.html" ]; then
-              echo "index.html mevcut."
-            else
-              echo "Uyarı: index.html bulunamadı!"
-              exit 1
-            fi
 
-      # 3. Cloudflare Wrangler CLI'ını kurup projenizi Pages'e gönderin
       - run:
           name: Deploy to Cloudflare Pages
-          command: |
-            npx wrangler pages deploy . --project-name="maku-yl"
-           
+          command: npx wrangler pages deploy . --project-name="maku-yl"
 
 workflows:
   version: 2
-  main-workflow:
+  deployment-workflow:
     jobs:
       - build-and-deploy:
           filters:
             branches:
-              only: main # Sadece main branch'ine pushlandığında çalışır
-
-     
+              only: main
