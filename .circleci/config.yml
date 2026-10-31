@@ -9,8 +9,10 @@ jobs:
 
       - run:
           name: Deploy to Cloudflare Pages
-          command: npx wrangler pages deploy . --project-name="maku-yl"
-          
+          command: npx wrangler pages deploy . --project-name="maku-yl" --account-id="eb230a04db87ee01573d36e5e11aa18a"
+          environment:
+            CLOUDFLARE_API_TOKEN: ${CLOUDFLARE_API_TOKEN}
+
 workflows:
   version: 2
   deployment-workflow:
