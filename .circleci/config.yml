@@ -16,9 +16,6 @@ jobs:
               echo "Uyarı: index.html bulunamadı!"
               exit 1
             fi
-      - run:
-          name: Build Project
-          command: npm run build
 
       # 3. Cloudflare Wrangler CLI'ını kurup projenizi Pages'e gönderin
       - run:
