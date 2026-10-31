@@ -9,10 +9,10 @@ jobs:
 
       - run:
           name: Deploy to Cloudflare Pages
-          command: CLOUDFLARE_ACCOUNT_ID="eb230a04db87ee01573d36e5e11aa18a" npx wrangler pages deploy . --project-name="maku-yl"
+          # Wrangler v3 sürümünü zorlayarak güncel v4 başlık hatalarını bypass ediyoruz
+          command: CLOUDFLARE_ACCOUNT_ID="eb230a04db87ee01573d36e5e11aa18a" npx wrangler@3 pages deploy . --project-name="maku-yl"
           environment:
-            CLOUDFLARE_API_KEY: ${CLOUDFLARE_API_KEY}
-            CLOUDFLARE_EMAIL: ${CLOUDFLARE_EMAIL}
+            CLOUDFLARE_API_TOKEN: ${CLOUDFLARE_API_TOKEN}
 
 workflows:
   version: 2
