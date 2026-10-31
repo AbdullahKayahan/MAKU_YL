@@ -3,7 +3,7 @@ version: 2.1
 jobs:
  build-and-deploy:
     docker:
-      - image: cimg/node:20.11.0 # Node.js ve npm'in yüklü olduğu resmi imaj
+      - image: cimg/node:22.0.0 # Node.js ve npm'in yüklü olduğu resmi imaj
     steps:
       - checkout
       - run:
