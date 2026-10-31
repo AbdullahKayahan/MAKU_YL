@@ -1,8 +1,5 @@
 version: 2.1
 
-orbs:
-  slack: circleci/slack@4.1.3
-
 jobs:
   build-and-deploy:
     docker:
@@ -11,64 +8,64 @@ jobs:
       - checkout
 
       # --- 1. INSTALL DEPENDENCIES ---
-      - slack/notify:
-          event: always
-          custom: '{"blocks": [{"type": "section", "text": {"type": "mrkdwn", "text": "⏳ *[1/5] Install dependencies* adımı başladı..."}}]}'
+      - run:
+          name: Notify Slack - Install Started
+          command: curl -s -X POST --data-urlencode 'payload={"text": "⏳ *[1/5] Install dependencies* adımı başladı..."}' ${SLACK_WEBHOOK_URL} || true
       - run:
           name: Install dependencies
           command: yarn install --frozen-lockfile
-      - slack/notify:
-          event: always
-          custom: '{"blocks": [{"type": "section", "text": {"type": "mrkdwn", "text": "✅ *[1/5] Install dependencies* adımı başarıyla tamamlandı."}}]}'
+      - run:
+          name: Notify Slack - Install Completed
+          command: curl -s -X POST --data-urlencode 'payload={"text": "✅ *[1/5] Install dependencies* adımı başarıyla tamamlandı."}' ${SLACK_WEBHOOK_URL} || true
 
       # --- 2. RUN ESLINT ---
-      - slack/notify:
-          event: always
-          custom: '{"blocks": [{"type": "section", "text": {"type": "mrkdwn", "text": "⏳ *[2/5] Run ESLint* adımı başladı..."}}]}'
+      - run:
+          name: Notify Slack - ESLint Started
+          command: curl -s -X POST --data-urlencode 'payload={"text": "⏳ *[2/5] Run ESLint* adımı başladı..."}' ${SLACK_WEBHOOK_URL} || true
       - run:
           name: Run ESLint
           command: yarn lint
-      - slack/notify:
-          event: always
-          custom: '{"blocks": [{"type": "section", "text": {"type": "mrkdwn", "text": "✅ *[2/5] Run ESLint* adımı başarıyla tamamlandı."}}]}'
+      - run:
+          name: Notify Slack - ESLint Completed
+          command: curl -s -X POST --data-urlencode 'payload={"text": "✅ *[2/5] Run ESLint* adımı başarıyla tamamlandı."}' ${SLACK_WEBHOOK_URL} || true
 
       # --- 3. CHECK TRANSLATION METADATA ---
-      - slack/notify:
-          event: always
-          custom: '{"blocks": [{"type": "section", "text": {"type": "mrkdwn", "text": "⏳ *[3/5] Check translation metadata* adımı başladı..."}}]}'
+      - run:
+          name: Notify Slack - Translation Started
+          command: curl -s -X POST --data-urlencode 'payload={"text": "⏳ *[3/5] Check translation metadata* adımı başladı..."}' ${SLACK_WEBHOOK_URL} || true
       - run:
           name: Check translation metadata
           command: yarn lint:translations
-      - slack/notify:
-          event: always
-          custom: '{"blocks": [{"type": "section", "text": {"type": "mrkdwn", "text": "✅ *[3/5] Check translation metadata* adımı başarıyla tamamlandı."}}]}'
+      - run:
+          name: Notify Slack - Translation Completed
+          command: curl -s -X POST --data-urlencode 'payload={"text": "✅ *[3/5] Check translation metadata* adımı başarıyla tamamlandı."}' ${SLACK_WEBHOOK_URL} || true
 
       # --- 4. RUN TESTS ---
-      - slack/notify:
-          event: always
-          custom: '{"blocks": [{"type": "section", "text": {"type": "mrkdwn", "text": "⏳ *[4/5] Run tests* adımı başladı..."}}]}'
+      - run:
+          name: Notify Slack - Tests Started
+          command: curl -s -X POST --data-urlencode 'payload={"text": "⏳ *[4/5] Run tests* adımı başladı..."}' ${SLACK_WEBHOOK_URL} || true
       - run:
           name: Run tests
           command: CI=true yarn test --watchAll=false --passWithNoTests
-      - slack/notify:
-          event: always
-          custom: '{"blocks": [{"type": "section", "text": {"type": "mrkdwn", "text": "✅ *[4/5] Run tests* adımı başarıyla tamamlandı."}}]}'
+      - run:
+          name: Notify Slack - Tests Completed
+          command: curl -s -X POST --data-urlencode 'payload={"text": "✅ *[4/5] Run tests* adımı başarıyla tamamlandı."}' ${SLACK_WEBHOOK_URL} || true
 
       # --- 5. BUILD REACT APP ---
-      - slack/notify:
-          event: always
-          custom: '{"blocks": [{"type": "section", "text": {"type": "mrkdwn", "text": "⏳ *[5/5] Build React app* adımı başladı..."}}]}'
+      - run:
+          name: Notify Slack - Build Started
+          command: curl -s -X POST --data-urlencode 'payload={"text": "⏳ *[5/5] Build React app* adımı başladı..."}' ${SLACK_WEBHOOK_URL} || true
       - run:
           name: Build React app
           command: yarn build
-      - slack/notify:
-          event: always
-          custom: '{"blocks": [{"type": "section", "text": {"type": "mrkdwn", "text": "✅ *[5/5] Build React app* adımı başarıyla tamamlandı."}}]}'
+      - run:
+          name: Notify Slack - Build Completed
+          command: curl -s -X POST --data-urlencode 'payload={"text": "✅ *[5/5] Build React app* adımı başarıyla tamamlandı."}' ${SLACK_WEBHOOK_URL} || true
 
       # --- 6. DEPLOY TO CLOUDFLARE PAGES ---
-      - slack/notify:
-          event: always
-          custom: '{"blocks": [{"type": "section", "text": {"type": "mrkdwn", "text": "🚀 *Cloudflare Deploy* adımı başladı..."}}]}'
+      - run:
+          name: Notify Slack - Deploy Started
+          command: curl -s -X POST --data-urlencode 'payload={"text": "🚀 *Cloudflare Deploy* adımı başladı..."}' ${SLACK_WEBHOOK_URL} || true
       - run:
           name: Deploy to Cloudflare Pages
           command: npx wrangler@3 pages deploy build --project-name="maku-yl"
@@ -76,16 +73,17 @@ jobs:
             CLOUDFLARE_API_TOKEN: ${CLOUDFLARE_API_TOKEN}
             CLOUDFLARE_ACCOUNT_ID: "eb230a04db87ee01573d36e5e11aa18a"
 
-      # --- GENEL SONUÇ BİLDİRİMLERİ ---
-      - slack/notify:
-          event: pass
-          template: basic_success_1
-          custom: '{"blocks": [{"type": "section", "text": {"type": "mrkdwn", "text": ":white_check_mark: *SUCCESS:* Tüm pipeline adımları başarıyla tamamlandı ve site canlıya alındı!"}}]}'
+      # --- GENEL BAŞARI BİLDİRİMİ ---
+      - run:
+          name: Notify Slack - Success
+          command: curl -s -X POST --data-urlencode 'payload={"text": "🟢 *SUCCESS:* Tüm pipeline adımları başarıyla tamamlandı ve site canlıya alındı!"}' ${SLACK_WEBHOOK_URL} || true
 
-      - slack/notify:
-          event: fail
-          template: basic_fail_1
-          custom: '{"blocks": [{"type": "section", "text": {"type": "mrkdwn", "text": ":x: *FAIL:* Pipeline adımlarından birinde hata oluştu, işlem durduruldu."}}]}'
+    # Hata durumunda tetiklenecek blok
+    post-steps:
+      - run:
+          name: Notify Slack - Failure
+          when: on_fail
+          command: curl -s -X POST --data-urlencode 'payload={"text": "🔴 *FAIL:* Pipeline adımlarından birinde hata oluştu, işlem durduruldu."}' ${SLACK_WEBHOOK_URL} || true
 
 workflows:
   version: 2
