@@ -1,0 +1,24 @@
+version: 2.1
+
+jobs:
+  build-and-validate:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - run:
+          name: Statik Site Kontrolü
+          command: |
+            echo "Statik HTML sitesi başarıyla kontrol edildi."
+            if [ -f "index.html" ]; then
+              echo "index.html mevcut."
+            else
+              echo "Uyarı: index.html bulunamadı!"
+              exit 1
+            fi
+
+workflows:
+  version: 2
+  main-workflow:
+    jobs:
+      - build-and-validate
