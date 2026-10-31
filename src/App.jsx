@@ -38,7 +38,7 @@ export default function App() {
       <header className="bg-white shadow sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
           <h1 className="text-2xl font-bold text-indigo-600 cursor-pointer" onClick={() => setCurrentPage('home')}>
-            ModerneTicaret
+            ARA BUL AL
           </h1>
           <nav className="flex space-x-6 items-center">
             <button onClick={() => setCurrentPage('home')} className={`font-medium ${currentPage === 'home' ? 'text-indigo-600' : 'text-gray-600 hover:text-indigo-600'}`}>
@@ -184,7 +184,7 @@ export default function App() {
 
       {/* Footer */}
       <footer className="bg-white border-t mt-12 py-6 text-center text-gray-500 text-sm">
-        &copy; 2026 ModerneTicaret. Tüm hakları saklıdır.
+        &copy; 2026 Ara-Bul-Al. Tüm hakları saklıdır.
       </footer>
     </div>
   );

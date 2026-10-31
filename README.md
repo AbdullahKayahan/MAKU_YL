@@ -1,6 +1,6 @@
 # React E-Ticaret Örnek Projesi
 
-Bu proje, Cloudflare Pages ve CircleCI entegrasyonunu test etmek için hazırlanmış 3 sayfalık modern bir e-ticaret React uygulamasıdır.
+Bu proje, Cloudflare Pages ve CircleCI entegrasyonunu test etmek için hazırlanmış 3 sayfalık bir e-ticaret React uygulamasıdır.
 
 ## Kurulum ve Çalıştırma
 
