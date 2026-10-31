@@ -10,62 +10,73 @@ jobs:
       # --- 1. INSTALL DEPENDENCIES ---
       - run:
           name: Notify Slack - Install Started
-          command: curl -s -X POST --data-urlencode 'payload={"text": "⏳ *[1/5] Install dependencies* adımı başladı..."}' ${SLACK_WEBHOOK_URL} || true
+          command: |
+            curl -s -X POST --data-urlencode 'payload={"text": "⏳ *[1/5] Install dependencies* adımı başladı..."}' ${SLACK_WEBHOOK_URL} || true
       - run:
           name: Install dependencies
           command: yarn install --frozen-lockfile
       - run:
           name: Notify Slack - Install Completed
-          command: curl -s -X POST --data-urlencode 'payload={"text": "✅ *[1/5] Install dependencies* adımı başarıyla tamamlandı."}' ${SLACK_WEBHOOK_URL} || true
+          command: |
+            curl -s -X POST --data-urlencode 'payload={"text": "✅ *[1/5] Install dependencies* adımı başarıyla tamamlandı."}' ${SLACK_WEBHOOK_URL} || true
 
       # --- 2. RUN ESLINT ---
       - run:
           name: Notify Slack - ESLint Started
-          command: curl -s -X POST --data-urlencode 'payload={"text": "⏳ *[2/5] Run ESLint* adımı başladı..."}' ${SLACK_WEBHOOK_URL} || true
+          command: |
+            curl -s -X POST --data-urlencode 'payload={"text": "⏳ *[2/5] Run ESLint* adımı başladı..."}' ${SLACK_WEBHOOK_URL} || true
       - run:
           name: Run ESLint
           command: yarn lint
       - run:
           name: Notify Slack - ESLint Completed
-          command: curl -s -X POST --data-urlencode 'payload={"text": "✅ *[2/5] Run ESLint* adımı başarıyla tamamlandı."}' ${SLACK_WEBHOOK_URL} || true
+          command: |
+            curl -s -X POST --data-urlencode 'payload={"text": "✅ *[2/5] Run ESLint* adımı başarıyla tamamlandı."}' ${SLACK_WEBHOOK_URL} || true
 
       # --- 3. CHECK TRANSLATION METADATA ---
       - run:
           name: Notify Slack - Translation Started
-          command: curl -s -X POST --data-urlencode 'payload={"text": "⏳ *[3/5] Check translation metadata* adımı başladı..."}' ${SLACK_WEBHOOK_URL} || true
+          command: |
+            curl -s -X POST --data-urlencode 'payload={"text": "⏳ *[3/5] Check translation metadata* adımı başladı..."}' ${SLACK_WEBHOOK_URL} || true
       - run:
           name: Check translation metadata
           command: yarn lint:translations
       - run:
           name: Notify Slack - Translation Completed
-          command: curl -s -X POST --data-urlencode 'payload={"text": "✅ *[3/5] Check translation metadata* adımı başarıyla tamamlandı."}' ${SLACK_WEBHOOK_URL} || true
+          command: |
+            curl -s -X POST --data-urlencode 'payload={"text": "✅ *[3/5] Check translation metadata* adımı başarıyla tamamlandı."}' ${SLACK_WEBHOOK_URL} || true
 
       # --- 4. RUN TESTS ---
       - run:
           name: Notify Slack - Tests Started
-          command: curl -s -X POST --data-urlencode 'payload={"text": "⏳ *[4/5] Run tests* adımı başladı..."}' ${SLACK_WEBHOOK_URL} || true
+          command: |
+            curl -s -X POST --data-urlencode 'payload={"text": "⏳ *[4/5] Run tests* adımı başladı..."}' ${SLACK_WEBHOOK_URL} || true
       - run:
           name: Run tests
           command: CI=true yarn test --watchAll=false --passWithNoTests
       - run:
           name: Notify Slack - Tests Completed
-          command: curl -s -X POST --data-urlencode 'payload={"text": "✅ *[4/5] Run tests* adımı başarıyla tamamlandı."}' ${SLACK_WEBHOOK_URL} || true
+          command: |
+            curl -s -X POST --data-urlencode 'payload={"text": "✅ *[4/5] Run tests* adımı başarıyla tamamlandı."}' ${SLACK_WEBHOOK_URL} || true
 
       # --- 5. BUILD REACT APP ---
       - run:
           name: Notify Slack - Build Started
-          command: curl -s -X POST --data-urlencode 'payload={"text": "⏳ *[5/5] Build React app* adımı başladı..."}' ${SLACK_WEBHOOK_URL} || true
+          command: |
+            curl -s -X POST --data-urlencode 'payload={"text": "⏳ *[5/5] Build React app* adımı başladı..."}' ${SLACK_WEBHOOK_URL} || true
       - run:
           name: Build React app
           command: yarn build
       - run:
           name: Notify Slack - Build Completed
-          command: curl -s -X POST --data-urlencode 'payload={"text": "✅ *[5/5] Build React app* adımı başarıyla tamamlandı."}' ${SLACK_WEBHOOK_URL} || true
+          command: |
+            curl -s -X POST --data-urlencode 'payload={"text": "✅ *[5/5] Build React app* adımı başarıyla tamamlandı."}' ${SLACK_WEBHOOK_URL} || true
 
       # --- 6. DEPLOY TO CLOUDFLARE PAGES ---
       - run:
           name: Notify Slack - Deploy Started
-          command: curl -s -X POST --data-urlencode 'payload={"text": "🚀 *Cloudflare Deploy* adımı başladı..."}' ${SLACK_WEBHOOK_URL} || true
+          command: |
+            curl -s -X POST --data-urlencode 'payload={"text": "🚀 *Cloudflare Deploy* adımı başladı..."}' ${SLACK_WEBHOOK_URL} || true
       - run:
           name: Deploy to Cloudflare Pages
           command: npx wrangler@3 pages deploy build --project-name="maku-yl"
@@ -76,14 +87,15 @@ jobs:
       # --- GENEL BAŞARI BİLDİRİMİ ---
       - run:
           name: Notify Slack - Success
-          command: curl -s -X POST --data-urlencode 'payload={"text": "🟢 *SUCCESS:* Tüm pipeline adımları başarıyla tamamlandı ve site canlıya alındı!"}' ${SLACK_WEBHOOK_URL} || true
+          command: |
+            curl -s -X POST --data-urlencode 'payload={"text": "🟢 *SUCCESS:* Tüm pipeline adımları başarıyla tamamlandı ve site canlıya alındı!"}' ${SLACK_WEBHOOK_URL} || true
 
-    # Hata durumunda tetiklenecek blok
-    post-steps:
+      # --- GENEL HATA BİLDİRİMİ (Adımlardan biri patladığında çalışır) ---
       - run:
           name: Notify Slack - Failure
           when: on_fail
-          command: curl -s -X POST --data-urlencode 'payload={"text": "🔴 *FAIL:* Pipeline adımlarından birinde hata oluştu, işlem durduruldu."}' ${SLACK_WEBHOOK_URL} || true
+          command: |
+            curl -s -X POST --data-urlencode 'payload={"text": "🔴 *FAIL:* Pipeline adımlarından birinde hata oluştu, işlem durduruldu."}' ${SLACK_WEBHOOK_URL} || true
 
 workflows:
   version: 2
