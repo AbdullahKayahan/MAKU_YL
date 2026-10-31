@@ -9,13 +9,10 @@ jobs:
 
       - run:
           name: Deploy to Cloudflare Pages
-          command: |
-            # CLOUDFLARE_API_TOKEN ve CLOUDFLARE_ACCOUNT_ID CircleCI ortam değişkenlerinden otomatik okunur
-            npx wrangler pages deploy . --project-name="maku-yl"
+          command: npx wrangler pages deploy . --project-name="maku-yl"
           environment:
-            # Wrangler'ın bazen bash içinde değişkenleri doğrudan görmesi için explicit (açık) tanımlama:
-            CLOUDFLARE_API_TOKEN: $CLOUDFLARE_API_TOKEN
-            CLOUDFLARE_ACCOUNT_ID: $CLOUDFLARE_ACCOUNT_ID
+            CLOUDFLARE_API_TOKEN: ${CLOUDFLARE_API_TOKEN}
+            CLOUDFLARE_ACCOUNT_ID: ${CLOUDFLARE_ACCOUNT_ID}
 
 workflows:
   version: 2
