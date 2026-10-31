@@ -9,8 +9,9 @@ jobs:
 
       - run:
           name: Deploy to Cloudflare Pages
-          # --yes parametresi ve CI=true ortam değişkeni ile etkileşimsiz modu zorlıyoruz
-          command: CI=true CLOUDFLARE_ACCOUNT_ID="eb230a04db87ee01573d36e5e11aa18a" npx wrangler@3 pages deploy . --project-name="maku-yl" --yes
+          # echo "y" pipelama yöntemi ile olası onay pencerelerini otomatik geçiyoruz
+          command: |
+            CI=true CLOUDFLARE_ACCOUNT_ID="eb230a04db87ee01573d36e5e11aa18a" echo "y" | npx wrangler@3 pages deploy . --project-name="maku-yl" --branch="main"
           environment:
             CLOUDFLARE_API_TOKEN: ${CLOUDFLARE_API_TOKEN}
 
