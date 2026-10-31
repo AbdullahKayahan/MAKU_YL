@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechVerse | Modern Computer & Hardware Blog</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        tech: {
+                            50: '#f0f4ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            800: '#1e1b4b',
+                            900: '#0f172a',
+                            950: '#090d16',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glow-effect {
+            box-shadow: 0 0 35px -5px rgba(99, 102, 241, 0.3);
+        }
+        .carousel-item {
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-tech-950 text-slate-100 font-sans min-h-screen flex flex-col antialiased selection:bg-indigo-500 selection:text-white">
+
+    <!-- Header Navigation -->
+    <header class="sticky top-0 z-50 backdrop-blur-md bg-tech-950/80 border-b border-slate-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="h-9 w-9 rounded-xl bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center text-white shadow-lg shadow-indigo-500/20">
+                    <i class="fa-solid me-0.5 fa-laptop-code text-lg"></i>
+                </div>
+                <span class="text-xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-200 to-indigo-300">TechVerse</span>
+            </div>
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-300">
+                <a href="#hero" class="hover:text-indigo-400 transition-colors">Home</a>
+                <a href="#showcase" class="hover:text-indigo-400 transition-colors">Computer Gallery</a>
+                <a href="#articles" class="hover:text-indigo-400 transition-colors">Tech Articles</a>
+            </nav>
+            <div class="flex items-center space-x-4">
+                <button class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs sm:text-sm font-semibold px-4 py-2 rounded-lg transition-all duration-300 shadow-md shadow-indigo-600/30">
+                    Subscribe
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        <!-- Hero Banner Section -->
+        <section id="hero" class="relative overflow-hidden pt-12 pb-20 lg:pt-20 lg:pb-28">
+            <!-- Background Glow Effects -->
+            <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute top-1/3 left-1/3 w-64 h-64 bg-purple-600/20 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+                <div class="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-slate-800/80 border border-slate-700/60 mb-6 backdrop-blur-sm text-xs font-medium text-indigo-300">
+                    <span class="flex h-2 w-2 rounded-full bg-indigo-400 animate-pulse"></span>
+                    <span>Exploring Modern Hardware & Computing Architecture</span>
+                </div>
+                
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight max-w-4xl mx-auto mb-6">
+                    TechVerse: <span class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-300 to-pink-400">Computer & Hardware Blog</span>
+                </h1>
+                
+                <p class="text-base sm:text-lg text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed">
+                    From ultra-portable modern laptops to liquid-cooled workstation behemoths and classic retro setups. Explore the evolution and architecture of computing hardware.
+                </p>
+
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a href="#showcase" class="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold transition-all shadow-lg shadow-indigo-600/30 space-x-2">
+                        <span>Explore Computer Showcase</span>
+                        <i class="fa-solid fa-arrow-down text-sm"></i>
+                    </a>
+                    <a href="#articles" class="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 rounded-xl bg-slate-800/80 hover:bg-slate-800 text-slate-200 border border-slate-700 font-semibold transition-all">
+                        Read Hardware Articles
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Computer Models Carousel Section -->
+        <section id="showcase" class="py-12 bg-slate-900/50 border-y border-slate-800/60 relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-10">
+                    <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight mb-2">Featured Computer Models</h2>
+                    <p class="text-slate-400 text-sm sm:text-base">Swipe or click through to explore different computing form factors and eras</p>
+                </div>
+
+                <!-- Carousel Container -->
+                <div class="relative max-w-5xl mx-auto glow-effect rounded-2xl overflow-hidden bg-slate-800/80 border border-slate-700/60 shadow-2xl">
+                    <!-- Slides Track -->
+                    <div id="carousel-track" class="relative min-h-[400px] sm:min-h-[480px]">
+                        
+                        <!-- Slide 1: Ultrabook -->
+                        <div class="carousel-item absolute inset-0 opacity-100 flex flex-col md:flex-row items-center justify-between p-6 sm:p-10 gap-8">
+                            <div class="w-full md:w-1/2 space-y-4 order-2 md:order-1 text-left">
+                                <span class="px-2.5 py-1 text-xs font-semibold rounded-md bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">Ultraportable</span>
+                                <h3 class="text-2xl sm:text-3xl font-bold text-white">Sleek Ultrabook</h3>
+                                <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                                    Designed for maximum mobility and battery efficiency. Powered by low-TDP ARM and x86 processors, featuring fanless passive cooling, high-density OLED panels, and all-day endurance for modern remote workflows.
+                                </p>
+                                <div class="pt-2 flex items-center space-x-4 text-xs text-slate-400">
+                                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-feather text-indigo-400"></i> Under 1.2 kg</span>
+                                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-battery-full text-indigo-400"></i> 18h Battery</span>
+                                </div>
+                            </div>
+                            <div class="w-full md:w-1/2 order-1 md:order-2 flex justify-center">
+                                <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=800&q=80" 
+                                     alt="Sleek Modern Laptop" 
+                                     class="rounded-xl shadow-lg object-cover w-full h-56 sm:h-72 border border-slate-700/50"
+                                     onerror="this.onerror=null; this.src='https://placehold.co/800x500/1e1b4b/ffffff?text=Ultrabook+Laptop';">
+                            </div>
+                        </div>
+
+                        <!-- Slide 2: Gaming Rig -->
+                        <div class="carousel-item absolute inset-0 opacity-0 pointer-events-none flex flex-col md:flex-row items-center justify-between p-6 sm:p-10 gap-8">
+                            <div class="w-full md:w-1/2 space-y-4 order-2 md:order-1 text-left">
+                                <span class="px-2.5 py-1 text-xs font-semibold rounded-md bg-purple-500/10 text-purple-400 border border-purple-500/20">High Performance</span>
+                                <h3 class="text-2xl sm:text-3xl font-bold text-white">Custom Gaming PC</h3>
+                                <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                                    High-airflow desktop rigs configured for extreme graphical fidelity and real-time ray tracing. Packed with multi-core CPUs, flagship discrete GPUs, addressable RGB lighting, and custom liquid loop systems.
+                                </p>
+                                <div class="pt-2 flex items-center space-x-4 text-xs text-slate-400">
+                                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-microchip text-purple-400"></i> Flagship GPU</span>
+                                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-fan text-purple-400"></i> Liquid Cooled</span>
+                                </div>
+                            </div>
+                            <div class="w-full md:w-1/2 order-1 md:order-2 flex justify-center">
+                                <img src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&w=800&q=80" 
+                                     alt="Custom Gaming PC Rig" 
+                                     class="rounded-xl shadow-lg object-cover w-full h-56 sm:h-72 border border-slate-700/50"
+                                     onerror="this.onerror=null; this.src='https://placehold.co/800x500/1e1b4b/ffffff?text=Custom+Gaming+PC';">
+                            </div>
+                        </div>
+
+                        <!-- Slide 3: Workstation Setup -->
+                        <div class="carousel-item absolute inset-0 opacity-0 pointer-events-none flex flex-col md:flex-row items-center justify-between p-6 sm:p-10 gap-8">
+                            <div class="w-full md:w-1/2 space-y-4 order-2 md:order-1 text-left">
+                                <span class="px-2.5 py-1 text-xs font-semibold rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Professional</span>
+                                <h3 class="text-2xl sm:text-3xl font-bold text-white">Dual-Monitor Workstation</h3>
+                                <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                                    Engineered for 3D rendering, software compilation, and video production. Features ECC memory support, expansive color-accurate ultra-wide displays, and ergonomic peripherals for heavy creative workloads.
+                                </p>
+                                <div class="pt-2 flex items-center space-x-4 text-xs text-slate-400">
+                                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-desktop text-emerald-400"></i> Dual 4K Displays</span>
+                                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-memory text-emerald-400"></i> 64GB+ ECC RAM</span>
+                                </div>
+                            </div>
+                            <div class="w-full md:w-1/2 order-1 md:order-2 flex justify-center">
+                                <img src="https://images.unsplash.com/photo-1593640408182-31c70c8268f5?auto=format&fit=crop&w=800&q=80" 
+                                     alt="Minimal Workstation Setup" 
+                                     class="rounded-xl shadow-lg object-cover w-full h-56 sm:h-72 border border-slate-700/50"
+                                     onerror="this.onerror=null; this.src='https://placehold.co/800x500/1e1b4b/ffffff?text=Professional+Workstation';">
+                            </div>
+                        </div>
+
+                        <!-- Slide 4: Classic Retro PC -->
+                        <div class="carousel-item absolute inset-0 opacity-0 pointer-events-none flex flex-col md:flex-row items-center justify-between p-6 sm:p-10 gap-8">
+                            <div class="w-full md:w-1/2 space-y-4 order-2 md:order-1 text-left">
+                                <span class="px-2.5 py-1 text-xs font-semibold rounded-md bg-amber-500/10 text-amber-400 border border-amber-500/20">Vintage Computing</span>
+                                <h3 class="text-2xl sm:text-3xl font-bold text-white">Classic Retro Personal Computer</h3>
+                                <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                                    A nostalgic look back at early desktop computing. Featuring beige CRT monitors, tactile mechanical switches, floppy drives, and retro single-core processors that paved the way for modern PCs.
+                                </p>
+                                <div class="pt-2 flex items-center space-x-4 text-xs text-slate-400">
+                                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-tv text-amber-400"></i> CRT Display</span>
+                                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-compact-disc text-amber-400"></i> Legacy Hardware</span>
+                                </div>
+                            </div>
+                            <div class="w-full md:w-1/2 order-1 md:order-2 flex justify-center">
+                                <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=800&q=80" 
+                                     alt="Retro Classic Computer Setup" 
+                                     class="rounded-xl shadow-lg object-cover w-full h-56 sm:h-72 border border-slate-700/50"
+                                     onerror="this.onerror=null; this.src='https://placehold.co/800x500/1e1b4b/ffffff?text=Retro+Classic+PC';">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Navigation Arrows -->
+                    <button id="prev-btn" aria-label="Previous Slide" class="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-slate-900/80 hover:bg-indigo-600 text-white flex items-center justify-center backdrop-blur-sm border border-slate-700 transition-all focus:outline-none">
+                        <i class="fa-solid fa-chevron-left text-sm"></i>
+                    </button>
+                    <button id="next-btn" aria-label="Next Slide" class="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-slate-900/80 hover:bg-indigo-600 text-white flex items-center justify-center backdrop-blur-sm border border-slate-700 transition-all focus:outline-none">
+                        <i class="fa-solid fa-chevron-right text-sm"></i>
+                    </button>
+
+                    <!-- Indicator Dots -->
+                    <div id="dots-container" class="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
+                        <button class="dot w-3 h-3 rounded-full bg-indigo-500 transition-all duration-300" aria-label="Slide 1"></button>
+                        <button class="dot w-3 h-3 rounded-full bg-slate-600 hover:bg-slate-500 transition-all duration-300" aria-label="Slide 2"></button>
+                        <button class="dot w-3 h-3 rounded-full bg-slate-600 hover:bg-slate-500 transition-all duration-300" aria-label="Slide 3"></button>
+                        <button class="dot w-3 h-3 rounded-full bg-slate-600 hover:bg-slate-500 transition-all duration-300" aria-label="Slide 4"></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Blog Articles Grid Section -->
+        <section id="articles" class="py-16 lg:py-24">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+                    <div>
+                        <span class="text-xs font-semibold uppercase tracking-wider text-indigo-400">Hardware Insights</span>
+                        <h2 class="text-3xl font-bold text-white tracking-tight mt-1">Latest Tech Articles</h2>
+                    </div>
+                    <p class="text-slate-400 text-sm max-w-md mt-2 md:mt-0">
+                        Stay informed about CPU architecture shifts, PC gaming hardware evolution, and form-factor performance comparisons.
+                    </p>
+                </div>
+
+                <!-- Articles Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    
+                    <!-- Card 1 -->
+                    <article class="bg-slate-900/80 border border-slate-800 rounded-2xl overflow-hidden hover:border-slate-700 transition-all duration-300 flex flex-col group">
+                        <div class="relative overflow-hidden h-48">
+                            <img src="https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?auto=format&fit=crop&w=600&q=80" 
+                                 alt="CPU Architecture" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/600x400/1e1b4b/ffffff?text=CPU+Architecture';">
+                            <span class="absolute top-3 left-3 bg-indigo-600 text-white text-xs font-medium px-2.5 py-1 rounded-md">Architectures</span>
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <div class="flex items-center text-xs text-slate-400 space-x-3 mb-3">
+                                <span><i class="fa-regular fa-calendar me-1"></i> Oct 28, 2026</span>
+                                <span>•</span>
+                                <span><i class="fa-regular fa-clock me-1"></i> 5 min read</span>
+                            </div>
+                            <h3 class="text-lg font-bold text-white group-hover:text-indigo-400 transition-colors mb-2">
+                                ARM vs x86: The Future of Desktop Processors
+                            </h3>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">
+                                Examining how RISC-based ARM chips are challenging traditional CISC x86 architectures in efficiency and multi-core performance for personal workstations.
+                            </p>
+                            <div class="pt-4 border-t border-slate-800/80 flex items-center justify-between">
+                                <span class="text-xs font-medium text-slate-300">By Alex Chen</span>
+                                <a href="#" class="text-xs font-semibold text-indigo-400 group-hover:text-indigo-300 flex items-center space-x-1">
+                                    <span>Read Article</span>
+                                    <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Card 2 -->
+                    <article class="bg-slate-900/80 border border-slate-800 rounded-2xl overflow-hidden hover:border-slate-700 transition-all duration-300 flex flex-col group">
+                        <div class="relative overflow-hidden h-48">
+                            <img src="https://images.unsplash.com/photo-1555680202-c86f0e12f086?auto=format&fit=crop&w=600&q=80" 
+                                 alt="Laptop vs Desktop" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/600x400/1e1b4b/ffffff?text=Laptop+vs+Desktop';">
+                            <span class="absolute top-3 left-3 bg-purple-600 text-white text-xs font-medium px-2.5 py-1 rounded-md">Comparison</span>
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <div class="flex items-center text-xs text-slate-400 space-x-3 mb-3">
+                                <span><i class="fa-regular fa-calendar me-1"></i> Oct 24, 2026</span>
+                                <span>•</span>
+                                <span><i class="fa-regular fa-clock me-1"></i> 7 min read</span>
+                            </div>
+                            <h3 class="text-lg font-bold text-white group-hover:text-indigo-400 transition-colors mb-2">
+                                Desktop vs Laptop: Closing the Thermal Gap
+                            </h3>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">
+                                Can modern high-performance laptops match full tower desktop systems? A deep dive into thermal throttling, wattage limits, and portability trade-offs.
+                            </p>
+                            <div class="pt-4 border-t border-slate-800/80 flex items-center justify-between">
+                                <span class="text-xs font-medium text-slate-300">By Sarah Jenkins</span>
+                                <a href="#" class="text-xs font-semibold text-indigo-400 group-hover:text-indigo-300 flex items-center space-x-1">
+                                    <span>Read Article</span>
+                                    <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Card 3 -->
+                    <article class="bg-slate-900/80 border border-slate-800 rounded-2xl overflow-hidden hover:border-slate-700 transition-all duration-300 flex flex-col group">
+                        <div class="relative overflow-hidden h-48">
+                            <img src="https://images.unsplash.com/photo-1547082299-de196ea013d6?auto=format&fit=crop&w=600&q=80" 
+                                 alt="Modern Tech Hardware" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/600x400/1e1b4b/ffffff?text=Hardware+Trends';">
+                            <span class="absolute top-3 left-3 bg-emerald-600 text-white text-xs font-medium px-2.5 py-1 rounded-md">Trends</span>
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <div class="flex items-center text-xs text-slate-400 space-x-3 mb-3">
+                                <span><i class="fa-regular fa-calendar me-1"></i> Oct 19, 2026</span>
+                                <span>•</span>
+                                <span><i class="fa-regular fa-clock me-1"></i> 4 min read</span>
+                            </div>
+                            <h3 class="text-lg font-bold text-white group-hover:text-indigo-400 transition-colors mb-2">
+                                On-Device AI Acceleration & NPU Modules
+                            </h3>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">
+                                How dedicated Neural Processing Units (NPUs) are reshaping personal computers for real-time generative tasks and privacy-focused local processing.
+                            </p>
+                            <div class="pt-4 border-t border-slate-800/80 flex items-center justify-between">
+                                <span class="text-xs font-medium text-slate-300">By Marcus Vance</span>
+                                <a href="#" class="text-xs font-semibold text-indigo-400 group-hover:text-indigo-300 flex items-center space-x-1">
+                                    <span>Read Article</span>
+                                    <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-tech-950 border-t border-slate-800/80 py-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center sm:flex sm:items-center sm:justify-between text-sm text-slate-400">
+            <div class="flex items-center justify-center space-x-2 mb-4 sm:mb-0">
+                <i class="fa-solid fa-laptop-code text-indigo-400"></i>
+                <span class="font-bold text-white">TechVerse</span>
+                <span>— Hardware & Computer Insights</span>
+            </div>
+            <p>© 2026 TechVerse Blog. Built for tech enthusiasts.</p>
+        </div>
+    </footer>
+
+    <!-- Carousel Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const slides = document.querySelectorAll('.carousel-item');
+            const dots = document.querySelectorAll('.dot');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            
+            let currentIndex = 0;
+            let autoSlideTimer = null;
+
+            function updateCarousel(index) {
+                slides.forEach((slide, idx) => {
+                    if (idx === index) {
+                        slide.classList.remove('opacity-0', 'pointer-events-none');
+                        slide.classList.add('opacity-100');
+                    } else {
+                        slide.classList.remove('opacity-100');
+                        slide.classList.add('opacity-0', 'pointer-events-none');
+                    }
+                });
+
+                dots.forEach((dot, idx) => {
+                    if (idx === index) {
+                        dot.classList.remove('bg-slate-600');
+                        dot.classList.add('bg-indigo-500', 'w-6');
+                    } else {
+                        dot.classList.remove('bg-indigo-500', 'w-6');
+                        dot.classList.add('bg-slate-600', 'w-3');
+                    }
+                });
+            }
+
+            function nextSlide() {
+                currentIndex = (currentIndex + 1) % slides.length;
+                updateCarousel(currentIndex);
+            }
+
+            function prevSlide() {
+                currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+                updateCarousel(currentIndex);
+            }
+
+            // Event Listeners
+            nextBtn.addEventListener('click', () => {
+                nextSlide();
+                resetTimer();
+            });
+
+            prevBtn.addEventListener('click', () => {
+                prevSlide();
+                resetTimer();
+            });
+
+            dots.forEach((dot, idx) => {
+                dot.addEventListener('click', () => {
+                    currentIndex = idx;
+                    updateCarousel(currentIndex);
+                    resetTimer();
+                });
+            });
+
+            function startTimer() {
+                autoSlideTimer = setInterval(nextSlide, 5000);
+            }
+
+            function resetTimer() {
+                clearInterval(autoSlideTimer);
+                startTimer();
+            }
+
+            // Initial setup
+            updateCarousel(currentIndex);
+            startTimer();
+        });
+    </script>
+</body>
+</html>
