@@ -12,6 +12,14 @@ jobs:
           command: yarn install --frozen-lockfile
 
       - run:
+          name: Run ESLint
+          command: yarn lint
+
+      - run:
+          name: Check translation metadata
+          command: yarn lint:translations
+
+      - run:
           name: Run tests
           command: CI=true yarn test --watchAll=false --passWithNoTests
 
