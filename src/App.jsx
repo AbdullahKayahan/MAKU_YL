@@ -5,7 +5,7 @@ const products = [
   { id: 2, name: 'Akıllı Saat', price: 2400, category: 'Elektronik', image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&auto=format&fit=crop&q=60' },
   { id: 3, name: 'Minimalist Sırt Çantası', price: 850, category: 'Aksesuar', image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=500&auto=format&fit=crop&q=60' },
   { id: 4, name: 'Termos Matara', price: 450, category: 'Yaşam', image: 'https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=500&auto=format&fit=crop&q=60' },
-  { id: 5, name: 'Uzaktan Kumandalı Araba', price: 999, category: 'Elektronik', image: 'https://images.unsplash.com/photo-1789062390906-4854abee9992?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D' }
+  { id: 5, name: 'Uzaktan Kumandalı Araba', price: 899, category: 'Elektronik', image: 'https://images.unsplash.com/photo-1789062390906-4854abee9992?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D' }
 ];
 
 export default function App() {
