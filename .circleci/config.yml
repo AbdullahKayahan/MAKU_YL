@@ -107,14 +107,14 @@ jobs:
       - run:
           name: Notify Slack - Success
           command: |
-            curl -s -X POST --data-urlencode 'payload={"text": "🟢 *SUCCESS:* Main branch deployment tamamlandı, $NEW_VERSION versiyon canlıya alındı, GitHub Release oluşturuldu!"}' ${SLACK_WEBHOOK_URL} || true
+            curl -s -X POST --data-urlencode 'payload={"text": "🟢 *SUCCESS:* Main branch deployment tamamlandı, güncel versiyon canlıya alındı, GitHub Release oluşturuldu!"}' ${SLACK_WEBHOOK_URL} || true
 
       # --- GENEL HATA BİLDİRİMİ ---
       - run:
           name: Notify Slack - Failure
           when: on_fail
           command: |
-            curl -s -X POST --data-urlencode 'payload={"text": "🔴 *FAIL:* Deployment veya Release aşamasında $NEW_VERSION için bir hata oluştu!"}' ${SLACK_WEBHOOK_URL} || true
+            curl -s -X POST --data-urlencode 'payload={"text": "🔴 *FAIL:* Deployment veya Release aşamasında bir hata oluştu!"}' ${SLACK_WEBHOOK_URL} || true
 
 
 workflows:
