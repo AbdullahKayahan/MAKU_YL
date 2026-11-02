@@ -79,7 +79,7 @@ jobs:
           command: npx wrangler@3 pages deploy build --project-name="maku-yl"
           environment:
             CLOUDFLARE_API_TOKEN: ${CLOUDFLARE_API_TOKEN}
-            CLOUDFLARE_ACCOUNT_ID: "eb230a04db87ee01573d36e5e11aa18a"
+            CLOUDFLARE_ACCOUNT_ID: "${CLOUDFLARE_ACCOUNT_ID}" # "eb230a04db87ee01573d36e5e11aa18a"
 
       # --- GENEL BAŞARI BİLDİRİMİ ---
       - run:
