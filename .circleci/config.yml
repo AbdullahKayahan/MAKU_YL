@@ -1,6 +1,77 @@
 version: 2.1
 
 jobs:
+  build-and-test:
+    docker:
+      - image: cimg/node:22.12.0
+    steps:
+      - checkout
+
+      # --- 1. INSTALL DEPENDENCIES ---
+      - run:
+          name: Notify Slack - Install Started
+          command: |
+            curl -s -X POST --data-urlencode 'payload={"text": "⏳ *[1/4] Install dependencies* adımı başladı..."}' ${SLACK_WEBHOOK_URL} || true
+      - run:
+          name: Install dependencies
+          command: yarn install --frozen-lockfile
+      - run:
+          name: Notify Slack - Install Completed
+          command: |
+            curl -s -X POST --data-urlencode 'payload={"text": "✅ *[1/4] Install dependencies* adımı başarıyla tamamlandı."}' ${SLACK_WEBHOOK_URL} || true
+
+      # --- 2. RUN ESLINT ---
+      - run:
+          name: Notify Slack - ESLint Started
+          command: |
+            curl -s -X POST --data-urlencode 'payload={"text": "⏳ *[2/4] Run ESLint* adımı başladı..."}' ${SLACK_WEBHOOK_URL} || true
+      - run:
+          name: Run ESLint
+          command: yarn lint
+      - run:
+          name: Notify Slack - ESLint Completed
+          command: |
+            curl -s -X POST --data-urlencode 'payload={"text": "✅ *[2/4] Run ESLint* adımı başarıyla tamamlandı."}' ${SLACK_WEBHOOK_URL} || true
+
+      # --- 3. CHECK TRANSLATION METADATA ---
+      - run:
+          name: Notify Slack - Translation Started
+          command: |
+            curl -s -X POST --data-urlencode 'payload={"text": "⏳ *[3/4] Check translation metadata* adımı başladı..."}' ${SLACK_WEBHOOK_URL} || true
+      - run:
+          name: Check translation metadata
+          command: yarn lint:translations
+      - run:
+          name: Notify Slack - Translation Completed
+          command: |
+            curl -s -X POST --data-urlencode 'payload={"text": "✅ *[3/4] Check translation metadata* adımı başarıyla tamamlandı."}' ${SLACK_WEBHOOK_URL} || true
+
+      # --- 4. RUN TESTS ---
+      - run:
+          name: Notify Slack - Tests Started
+          command: |
+            curl -s -X POST --data-urlencode 'payload={"text": "⏳ *[4/4] Run tests* adımı başladı..."}' ${SLACK_WEBHOOK_URL} || true
+      - run:
+          name: Run tests
+          command: CI=true yarn test --watchAll=false --passWithNoTests
+      - run:
+          name: Notify Slack - Tests Completed
+          command: |
+            curl -s -X POST --data-urlencode 'payload={"text": "✅ *[4/4] Run tests* adımı başarıyla tamamlandı."}' ${SLACK_WEBHOOK_URL} || true
+
+      # --- BAŞARI / HATA BİLDİRİMLERİ ---
+      - run:
+          name: Notify Slack - Success
+          command: |
+            curl -s -X POST --data-urlencode 'payload={"text": "🟢 *SUCCESS:* Test branch adımları başarıyla tamamlandı!"}' ${SLACK_WEBHOOK_URL} || true
+
+      - run:
+          name: Notify Slack - Failure
+          when: on_fail
+          command: |
+            curl -s -X POST --data-urlencode 'payload={"text": "🔴 *FAIL:* Test aşamasında bir hata oluştu!"}' ${SLACK_WEBHOOK_URL} || true
+
+
   build-and-deploy:
     docker:
       - image: cimg/node:22.12.0
@@ -11,72 +82,80 @@ jobs:
       - run:
           name: Notify Slack - Install Started
           command: |
-            curl -s -X POST --data-urlencode 'payload={"text": "⏳ *[1/5] Install dependencies* adımı başladı..."}' ${SLACK_WEBHOOK_URL} || true
+            curl -s -X POST --data-urlencode 'payload={"text": "⏳ *[1/6] Install dependencies* adımı başladı..."}' ${SLACK_WEBHOOK_URL} || true
       - run:
           name: Install dependencies
           command: yarn install --frozen-lockfile
       - run:
           name: Notify Slack - Install Completed
           command: |
-            curl -s -X POST --data-urlencode 'payload={"text": "✅ *[1/5] Install dependencies* adımı başarıyla tamamlandı."}' ${SLACK_WEBHOOK_URL} || true
+            curl -s -X POST --data-urlencode 'payload={"text": "✅ *[1/6] Install dependencies* adımı başarıyla tamamlandı."}' ${SLACK_WEBHOOK_URL} || true
 
       # --- 2. RUN ESLINT ---
       - run:
           name: Notify Slack - ESLint Started
           command: |
-            curl -s -X POST --data-urlencode 'payload={"text": "⏳ *[2/5] Run ESLint* adımı başladı..."}' ${SLACK_WEBHOOK_URL} || true
+            curl -s -X POST --data-urlencode 'payload={"text": "⏳ *[2/6] Run ESLint* adımı başladı..."}' ${SLACK_WEBHOOK_URL} || true
       - run:
           name: Run ESLint
           command: yarn lint
       - run:
           name: Notify Slack - ESLint Completed
           command: |
-            curl -s -X POST --data-urlencode 'payload={"text": "✅ *[2/5] Run ESLint* adımı başarıyla tamamlandı."}' ${SLACK_WEBHOOK_URL} || true
+            curl -s -X POST --data-urlencode 'payload={"text": "✅ *[2/6] Run ESLint* adımı başarıyla tamamlandı."}' ${SLACK_WEBHOOK_URL} || true
 
       # --- 3. CHECK TRANSLATION METADATA ---
       - run:
           name: Notify Slack - Translation Started
           command: |
-            curl -s -X POST --data-urlencode 'payload={"text": "⏳ *[3/5] Check translation metadata* adımı başladı..."}' ${SLACK_WEBHOOK_URL} || true
+            curl -s -X POST --data-urlencode 'payload={"text": "⏳ *[3/6] Check translation metadata* adımı başladı..."}' ${SLACK_WEBHOOK_URL} || true
       - run:
           name: Check translation metadata
           command: yarn lint:translations
       - run:
           name: Notify Slack - Translation Completed
           command: |
-            curl -s -X POST --data-urlencode 'payload={"text": "✅ *[3/5] Check translation metadata* adımı başarıyla tamamlandı."}' ${SLACK_WEBHOOK_URL} || true
+            curl -s -X POST --data-urlencode 'payload={"text": "✅ *[3/6] Check translation metadata* adımı başarıyla tamamlandı."}' ${SLACK_WEBHOOK_URL} || true
 
       # --- 4. RUN TESTS ---
       - run:
           name: Notify Slack - Tests Started
           command: |
-            curl -s -X POST --data-urlencode 'payload={"text": "⏳ *[4/5] Run tests* adımı başladı..."}' ${SLACK_WEBHOOK_URL} || true
+            curl -s -X POST --data-urlencode 'payload={"text": "⏳ *[4/6] Run tests* adımı başladı..."}' ${SLACK_WEBHOOK_URL} || true
       - run:
           name: Run tests
           command: CI=true yarn test --watchAll=false --passWithNoTests
       - run:
           name: Notify Slack - Tests Completed
           command: |
-            curl -s -X POST --data-urlencode 'payload={"text": "✅ *[4/5] Run tests* adımı başarıyla tamamlandı."}' ${SLACK_WEBHOOK_URL} || true
+            curl -s -X POST --data-urlencode 'payload={"text": "✅ *[4/6] Run tests* adımı başarıyla tamamlandı."}' ${SLACK_WEBHOOK_URL} || true
 
-      # --- 5. BUILD REACT APP ---
+      # --- 5. VERSION BUMP & GIT TAG ---
       - run:
-          name: Notify Slack - Build Started
+          name: Notify Slack - Version Bump Started
           command: |
-            curl -s -X POST --data-urlencode 'payload={"text": "⏳ *[5/5] Build React app* adımı başladı..."}' ${SLACK_WEBHOOK_URL} || true
+            curl -s -X POST --data-urlencode 'payload={"text": "⏳ *[5/6] Version Bump* adımı başladı..."}' ${SLACK_WEBHOOK_URL} || true
+      - run:
+          name: Increment Version and Push Tag
+          command: |
+            git config user.email "ci@circleci.com"
+            git config user.name "CircleCI Bot"
+            # package.json versiyonunu patch seviyesinde artırır (örn: 1.0.0 -> 1.0.1)
+            npm version patch -m "chore(release): %s [skip ci]"
+            git push origin main --tags
+      - run:
+          name: Notify Slack - Version Bump Completed
+          command: |
+            curl -s -X POST --data-urlencode 'payload={"text": "✅ *[5/6] Sürüm artırıldı ve GitHub Tag oluşturuldu.*"}' ${SLACK_WEBHOOK_URL} || true
+
+      # --- 6. BUILD & DEPLOY TO CLOUDFLARE PAGES ---
+      - run:
+          name: Notify Slack - Build & Deploy Started
+          command: |
+            curl -s -X POST --data-urlencode 'payload={"text": "⏳ *[6/6] Build & Cloudflare Deploy* adımı başladı..."}' ${SLACK_WEBHOOK_URL} || true
       - run:
           name: Build React app
           command: yarn build
-      - run:
-          name: Notify Slack - Build Completed
-          command: |
-            curl -s -X POST --data-urlencode 'payload={"text": "✅ *[5/5] Build React app* adımı başarıyla tamamlandı."}' ${SLACK_WEBHOOK_URL} || true
-
-      # --- 6. DEPLOY TO CLOUDFLARE PAGES ---
-      - run:
-          name: Notify Slack - Deploy Started
-          command: |
-            curl -s -X POST --data-urlencode 'payload={"text": "🚀 *Cloudflare Deploy* adımı başladı..."}' ${SLACK_WEBHOOK_URL} || true
       - run:
           name: Deploy to Cloudflare Pages
           command: npx wrangler@3 pages deploy build --project-name="maku-yl"
@@ -88,20 +167,27 @@ jobs:
       - run:
           name: Notify Slack - Success
           command: |
-            curl -s -X POST --data-urlencode 'payload={"text": "🟢 *SUCCESS:* Tüm pipeline adımları başarıyla tamamlandı ve site canlıya alındı!"}' ${SLACK_WEBHOOK_URL} || true
+            curl -s -X POST --data-urlencode 'payload={"text": "🟢 *SUCCESS:* Main branch pipeline tamamlandı, versiyon güncellendi ve site canlıya alındı!"}' ${SLACK_WEBHOOK_URL} || true
 
-      # --- GENEL HATA BİLDİRİMİ (Adımlardan biri patladığında çalışır) ---
+      # --- GENEL HATA BİLDİRİMİ ---
       - run:
           name: Notify Slack - Failure
           when: on_fail
           command: |
-            curl -s -X POST --data-urlencode 'payload={"text": "🔴 *FAIL:* Pipeline adımlarından birinde hata oluştu, işlem durduruldu."}' ${SLACK_WEBHOOK_URL} || true
+            curl -s -X POST --data-urlencode 'payload={"text": "🔴 *FAIL:* Main pipeline adımlarından birinde hata oluştu!"}' ${SLACK_WEBHOOK_URL} || true
 
 workflows:
   version: 2
   deployment-workflow:
-    jobs:
-      - build-and-deploy:
-          filters:
-            branches:
-              only: main
+  workflows:
+    version: 2
+    deployment-workflow:
+      jobs:
+        - build-and-test:
+            filters:
+              branches:
+                ignore: main
+        - build-and-deploy:
+            filters:
+              branches:
+                only: main
