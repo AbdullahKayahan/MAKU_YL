@@ -140,7 +140,6 @@ jobs:
           command: |
             git config user.email "ci@circleci.com"
             git config user.name "CircleCI Bot"
-            # package.json versiyonunu patch seviyesinde artırır (örn: 1.0.0 -> 1.0.1)
             npm version patch -m "chore(release): %s [skip ci]"
             git push origin main --tags
       - run:
@@ -179,15 +178,12 @@ jobs:
 workflows:
   version: 2
   deployment-workflow:
-  workflows:
-    version: 2
-    deployment-workflow:
-      jobs:
-        - build-and-test:
-            filters:
-              branches:
-                ignore: main
-        - build-and-deploy:
-            filters:
-              branches:
-                only: main
+    jobs:
+      - build-and-test:
+          filters:
+            branches:
+              ignore: main
+      - build-and-deploy:
+          filters:
+            branches:
+              only: main
