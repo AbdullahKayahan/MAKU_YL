@@ -91,7 +91,7 @@ jobs:
             git config user.email "ci@circleci.com"
             git config user.name "CircleCI Bot"
             
-            # Uzak deponun URL'sini token ile kimlik doğrulamalı hale getir (push yetkisi için)
+            # Ortam değişkeninden repo bilgisini alarak URL'yi dinamik oluşturur
             git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
             
             git add package.json
@@ -99,10 +99,13 @@ jobs:
             git tag "$NEW_VERSION"
             git push origin main --tags
 
-            # GitHub CLI, GH_TOKEN değişkenini otomatik tanır; ek login komutuna gerek yoktur.
-            gh release create "$NEW_VERSION" --title "Release $NEW_VERSION" --notes "Otomatik Cloudflare Pages deployment release."
-          environment:
-            GH_TOKEN: ${GITHUB_TOKEN}
+            # GitHub API kullanarak cURL ile otomatik Release oluşturma
+            curl -X POST \
+              -H "Authorization: token ${GITHUB_TOKEN}" \
+              -H "Accept: application/vnd.github.v3+json" \
+              https://api.github.com/repos/${GITHUB_REPOSITORY}/releases \
+              -d "{\"tag_name\":\"${NEW_VERSION}\",\"name\":\"Release ${NEW_VERSION}\",\"body\":\"Otomatik Cloudflare Pages deployment release.\"}"
+      
       # --- GENEL BAŞARI BİLDİRİMİ ---
       - run:
           name: Notify Slack - Success
