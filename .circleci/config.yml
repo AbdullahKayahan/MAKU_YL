@@ -88,16 +88,21 @@ jobs:
       - run:
           name: Commit Version, Push Tag and Create GitHub Release
           command: |
+            git config user.email "ci@circleci.com"
+            git config user.name "CircleCI Bot"
+            
+            # Uzak deponun URL'sini token ile kimlik doğrulamalı hale getir (push yetkisi için)
+            git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+            
             git add package.json
             git commit -m "chore(release): $NEW_VERSION [skip ci]"
             git tag "$NEW_VERSION"
             git push origin main --tags
 
-            # GitHub CLI (gh) kullanarak otomatik bir Release oluştur
-            npx gh release create "$NEW_VERSION" --title "Release $NEW_VERSION" --notes "Otomatik Cloudflare Pages deployment release."
+            # GitHub CLI, GH_TOKEN değişkenini otomatik tanır; ek login komutuna gerek yoktur.
+            gh release create "$NEW_VERSION" --title "Release $NEW_VERSION" --notes "Otomatik Cloudflare Pages deployment release."
           environment:
             GH_TOKEN: ${GITHUB_TOKEN}
-
       # --- GENEL BAŞARI BİLDİRİMİ ---
       - run:
           name: Notify Slack - Success
