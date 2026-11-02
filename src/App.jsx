@@ -74,7 +74,7 @@ export default function App() {
             
             <h3 className="text-2xl font-bold mb-6 text-gray-800">Popüler Ürünler</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-              {products.slice(0, 4).map(product => (
+              {products.slice(0, 5).map(product => (
                 <div key={product.id} className="bg-white rounded-xl shadow overflow-hidden flex flex-col border border-gray-100 hover:shadow-md transition">
                   <img src={product.image} alt={product.name} className="h-48 w-full object-cover" />
                   <div className="p-4 flex flex-col flex-grow justify-between">
