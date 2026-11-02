@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import packageJson from '../package.json';
 const products = [
   { id: 1, name: 'Kablosuz Kulaklık', price: 1250, category: 'Elektronik', image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&auto=format&fit=crop&q=60' },
   { id: 2, name: 'Akıllı Saat', price: 2400, category: 'Elektronik', image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&auto=format&fit=crop&q=60' },
@@ -184,7 +184,7 @@ export default function App() {
 
       {/* Footer */}
       <footer className="bg-white border-t mt-12 py-6 text-center text-gray-500 text-sm">
-        &copy; 2026 Ara-Bul-Al. Tüm hakları saklıdır.
+        &copy; 2026 Ara-Bul-Al. Tüm hakları saklıdır. v{packageJson.version}
       </footer>
     </div>
   );
