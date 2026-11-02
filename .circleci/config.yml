@@ -26,14 +26,12 @@ jobs:
       - run:
           name: Check translation metadata
           command: yarn lint:translations
-    
 
       # --- 4. RUN TESTS ---
-
       - run:
           name: Run tests
           command: CI=true yarn test --watchAll=false --passWithNoTests
-    
+
       # --- BAŞARI / HATA BİLDİRİMLERİ ---
       - run:
           name: Notify Slack - Success
@@ -47,7 +45,7 @@ jobs:
             curl -s -X POST --data-urlencode 'payload={"text": "🔴 *FAIL:* Test aşamasında bir hata oluştu!"}' ${SLACK_WEBHOOK_URL} || true
 
 
-  # 2. Sadece Main Branch için Sürüm Artırma, Build ve Deploy Job'ı
+  # 2. Sadece Main Branch için Versiyon Güncelleme, Build, Deploy ve Release Job'ı
   deploy:
     docker:
       - image: cimg/node:22.12.0
@@ -57,23 +55,28 @@ jobs:
           name: Install dependencies
           command: yarn install --frozen-lockfile
 
-      # --- 1. VERSION BUMP & GIT TAG ---
       - run:
           name: Notify Slack - Deployment Started
           command: |
-            curl -s -X POST --data-urlencode 'payload={"text": "⏳ *Deployment* adımı başladı..."}' ${SLACK_WEBHOOK_URL} || true
-      #- run:
-      #    name: Increment Version and Push Tag
-      #    command: |
-      #      git config user.email "ci@circleci.com"
-      #      git config user.name "CircleCI Bot"
-      #      npm version patch -m "chore(release): %s [skip ci]"
-      #      git push origin main --tags
-     
-      # --- 2. BUILD & DEPLOY TO CLOUDFLARE PAGES ---
+            curl -s -X POST --data-urlencode 'payload={"text": "⏳ *Deployment ve Release* adımı başladı..."}' ${SLACK_WEBHOOK_URL} || true
+
+      # --- 1. VERSİYONU ÖNCEDEN ARTIR (Build'in yeni versiyonu içermesi için) ---
       - run:
-          name: Build React app
+          name: Increment Version Locally
+          command: |
+            git config user.email "ci@circleci.com"
+            git config user.name "CircleCI Bot"
+            # package.json'ı yerelde artırır ve versiyon numarasını değişkene atar
+            NEW_VERSION=$(npm version patch --no-git-tag-version)
+            echo "Yeni Versiyon: $NEW_VERSION"
+            echo "export NEW_VERSION=$NEW_VERSION" >> $BASH_ENV
+
+      # --- 2. GÜNCEL VERSİYONLA BUILD AL ---
+      - run:
+          name: Build React app with Updated Version
           command: yarn build
+
+      # --- 3. CLOUDFLARE'E DEPLOY ET (Canlıya doğru ve güncel versiyon gider) ---
       - run:
           name: Deploy to Cloudflare Pages
           command: npx wrangler@3 pages deploy build --project-name="maku-yl"
@@ -81,28 +84,39 @@ jobs:
             CLOUDFLARE_API_TOKEN: ${CLOUDFLARE_API_TOKEN}
             CLOUDFLARE_ACCOUNT_ID: "eb230a04db87ee01573d36e5e11aa18a"
 
+      # --- 4. HER ŞEY BAŞARILIYSA GİT COMMIT, TAG VE GITHUB RELEASE OLUŞTUR ---
+      - run:
+          name: Commit Version, Push Tag and Create GitHub Release
+          command: |
+            git add package.json
+            git commit -m "chore(release): $NEW_VERSION [skip ci]"
+            git tag "$NEW_VERSION"
+            git push origin main --tags
+
+            # GitHub CLI (gh) kullanarak otomatik bir Release oluştur
+            npx gh release create "$NEW_VERSION" --title "Release $NEW_VERSION" --notes "Otomatik Cloudflare Pages deployment release."
+          environment:
+            GH_TOKEN: ${GITHUB_TOKEN}
+
       # --- GENEL BAŞARI BİLDİRİMİ ---
       - run:
           name: Notify Slack - Success
           command: |
-            curl -s -X POST --data-urlencode 'payload={"text": "🟢 *SUCCESS:* Main branch deployment tamamlandı, versiyon güncellendi ve site canlıya alındı!"}' ${SLACK_WEBHOOK_URL} || true
+            curl -s -X POST --data-urlencode 'payload={"text": "🟢 *SUCCESS:* Main branch deployment tamamlandı, güncel versiyon canlıya alındı, GitHub Release oluşturuldu!"}' ${SLACK_WEBHOOK_URL} || true
 
       # --- GENEL HATA BİLDİRİMİ ---
       - run:
           name: Notify Slack - Failure
           when: on_fail
           command: |
-            curl -s -X POST --data-urlencode 'payload={"text": "🔴 *FAIL:* Deployment aşamasında bir hata oluştu!"}' ${SLACK_WEBHOOK_URL} || true
+            curl -s -X POST --data-urlencode 'payload={"text": "🔴 *FAIL:* Deployment veya Release aşamasında bir hata oluştu!"}' ${SLACK_WEBHOOK_URL} || true
 
 
 workflows:
   version: 2
   deployment-workflow:
     jobs:
-      # Her branch'te önce testler çalışır
       - build-and-test
-
-      # Sadece main branch'te, testler BAŞARIYLA bittikten sonra deploy çalışır
       - deploy:
           requires:
             - build-and-test
