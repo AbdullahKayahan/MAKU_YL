@@ -72,7 +72,6 @@ export default function App() {
               </button>
             </div>
             
-            
             <h3 className="text-2xl font-bold mb-6 text-gray-800">Popüler Ürünler</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
               {products.slice(0, 4).map(product => (

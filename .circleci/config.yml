@@ -62,13 +62,13 @@ jobs:
           name: Notify Slack - Deployment Started
           command: |
             curl -s -X POST --data-urlencode 'payload={"text": "⏳ *Deployment* adımı başladı..."}' ${SLACK_WEBHOOK_URL} || true
-      - run:
-          name: Increment Version and Push Tag
-          command: |
-            git config user.email "ci@circleci.com"
-            git config user.name "CircleCI Bot"
-            npm version patch -m "chore(release): %s [skip ci]"
-            git push origin main --tags
+      #- run:
+      #    name: Increment Version and Push Tag
+      #    command: |
+      #      git config user.email "ci@circleci.com"
+      #      git config user.name "CircleCI Bot"
+      #      npm version patch -m "chore(release): %s [skip ci]"
+      #      git push origin main --tags
      
       # --- 2. BUILD & DEPLOY TO CLOUDFLARE PAGES ---
       - run:
