@@ -121,7 +121,7 @@ export default function App() {
                       <p className="text-indigo-600 font-extrabold mt-2">₺{product.price}</p>
                     </div>
                     <button onClick={() => addToCart(product)} className="mt-4 w-full bg-indigo-600 text-white py-2 rounded-lg font-medium hover:bg-indigo-700 transition">
-                      Sepete Ekle
+                      Sepete Ekleee
                     </button>
                   </div>
                 </div>
